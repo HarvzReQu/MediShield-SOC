@@ -9,10 +9,14 @@
   --muted: #a4a4a4;
   --soft: #d8d8d8;
   --accent: #ffffff;
-  --critical: #ffffff;
-  --high: #cfcfcf;
-  --medium: #9a9a9a;
-  --low: #666666;
+  --critical: #ff5a5f;
+  --high: #f5b84b;
+  --medium: #6fb7ff;
+  --low: #8adf9b;
+  --critical-line: #ffffff;
+  --high-line: #cfcfcf;
+  --medium-line: #9a9a9a;
+  --low-line: #666666;
 }
 
 * {
@@ -418,28 +422,28 @@ select {
   min-height: 74px;
   padding: 14px;
   border: 1px solid var(--line);
-  border-left: 4px solid var(--medium);
+  border-left: 4px solid var(--medium-line);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.025);
 }
 
 .incident.critical,
 .intel-item.critical {
-  border-left-color: var(--critical);
+  border-left-color: var(--critical-line);
 }
 
 .incident.high,
 .intel-item.high {
-  border-left-color: var(--high);
+  border-left-color: var(--high-line);
 }
 
 .incident.medium,
 .intel-item.medium {
-  border-left-color: var(--medium);
+  border-left-color: var(--medium-line);
 }
 
 .intel-item.low {
-  border-left-color: var(--low);
+  border-left-color: var(--low-line);
 }
 
 .severity,
@@ -457,6 +461,22 @@ select {
 .priority b {
   font-size: 1.45rem;
   line-height: 1;
+}
+
+.intel-item.critical .priority b {
+  color: var(--critical);
+}
+
+.intel-item.high .priority b {
+  color: var(--high);
+}
+
+.intel-item.medium .priority b {
+  color: var(--medium);
+}
+
+.intel-item.low .priority b {
+  color: var(--low);
 }
 
 .incident strong,
