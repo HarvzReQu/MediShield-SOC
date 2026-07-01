@@ -56,9 +56,13 @@ const intelUpdated = document.querySelector("#intelUpdated");
 const toggleGuide = document.querySelector("#toggleGuide");
 const guideDialog = document.querySelector("#guideDialog");
 const closeGuide = document.querySelector("#closeGuide");
+const socMap = document.querySelector("#socMap");
+const socLines = document.querySelector("#socLines");
+const socNodes = [...document.querySelectorAll("[data-node]")];
 
 let paused = false;
 let triaged = 0;
+let activeSocDrag = null;
 
 function renderIncidents() {
   const selected = severityFilter.value;
@@ -101,6 +105,47 @@ function updateSimulation() {
 
   incidentCount.textContent = openIncidents;
   riskScore.textContent = currentRisk;
+}
+
+function nodeCenterPercent(node) {
+  const mapRect = socMap.getBoundingClientRect();
+  const nodeRect = node.getBoundingClientRect();
+
+  return {
+    x: ((nodeRect.left + nodeRect.width / 2 - mapRect.left) / mapRect.width) * 100,
+    y: ((nodeRect.top + nodeRect.height / 2 - mapRect.top) / mapRect.height) * 100,
+  };
+}
+
+function updateSocLines() {
+  const core = socMap.querySelector('[data-node="core"]');
+  const corePosition = nodeCenterPercent(core);
+
+  socLines.querySelectorAll("line[data-link]").forEach((line) => {
+    const target = socMap.querySelector(`[data-node="${line.dataset.link}"]`);
+    if (!target) return;
+
+    const targetPosition = nodeCenterPercent(target);
+    line.setAttribute("x1", corePosition.x);
+    line.setAttribute("y1", corePosition.y);
+    line.setAttribute("x2", targetPosition.x);
+    line.setAttribute("y2", targetPosition.y);
+  });
+}
+
+function moveSocNode(node, clientX, clientY) {
+  const mapRect = socMap.getBoundingClientRect();
+  const nodeRect = node.getBoundingClientRect();
+  const halfWidth = (nodeRect.width / mapRect.width) * 50;
+  const halfHeight = (nodeRect.height / mapRect.height) * 50;
+  const nextX = ((clientX - mapRect.left) / mapRect.width) * 100;
+  const nextY = ((clientY - mapRect.top) / mapRect.height) * 100;
+  const clampedX = Math.min(Math.max(nextX, halfWidth), 100 - halfWidth);
+  const clampedY = Math.min(Math.max(nextY, halfHeight), 100 - halfHeight);
+
+  node.style.left = `${clampedX}%`;
+  node.style.top = `${clampedY}%`;
+  updateSocLines();
 }
 
 function formatDate(dateLike) {
@@ -207,6 +252,40 @@ closeGuide.addEventListener("click", () => {
   guideDialog.close();
 });
 
+socNodes.forEach((node) => {
+  node.addEventListener("pointerdown", (event) => {
+    const nodeRect = node.getBoundingClientRect();
+    activeSocDrag = {
+      node,
+      offsetX: event.clientX - (nodeRect.left + nodeRect.width / 2),
+      offsetY: event.clientY - (nodeRect.top + nodeRect.height / 2),
+    };
+    node.classList.add("dragging", "active");
+    node.setPointerCapture(event.pointerId);
+    moveSocNode(node, event.clientX - activeSocDrag.offsetX, event.clientY - activeSocDrag.offsetY);
+  });
+
+  node.addEventListener("pointermove", (event) => {
+    if (activeSocDrag?.node !== node) return;
+    moveSocNode(node, event.clientX - activeSocDrag.offsetX, event.clientY - activeSocDrag.offsetY);
+  });
+
+  node.addEventListener("pointerup", () => {
+    activeSocDrag = null;
+    node.classList.remove("dragging");
+  });
+
+  node.addEventListener("pointercancel", () => {
+    activeSocDrag = null;
+    node.classList.remove("dragging");
+  });
+
+  node.addEventListener("click", () => {
+    socNodes.forEach((item) => item.classList.remove("active"));
+    node.classList.add("active");
+  });
+});
+
 runTriage.addEventListener("click", () => {
   triaged = Math.min(triaged + 2, 8);
   runTriage.textContent = "Triage Running";
@@ -234,5 +313,7 @@ incidentList.addEventListener("click", (event) => {
 
 renderIncidents();
 renderBars();
+updateSocLines();
 loadIntel();
 setInterval(updateSimulation, 2600);
+window.addEventListener("resize", updateSocLines);

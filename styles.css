@@ -238,13 +238,132 @@ select {
   line-height: 1.65;
 }
 
-.hero-panel img {
+.soc-map {
+  position: relative;
   width: 100%;
+  min-height: 360px;
   max-height: 420px;
-  min-height: 280px;
-  object-fit: cover;
-  border-radius: 8px;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
   border: 1px solid var(--line);
+  border-radius: 8px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08), transparent 34%),
+    #080808;
+  background-size: 34px 34px, 34px 34px, auto, auto;
+  touch-action: none;
+}
+
+.soc-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.soc-lines line {
+  stroke: rgba(255, 255, 255, 0.44);
+  stroke-width: 0.42;
+  stroke-dasharray: 4 4;
+  animation: flowLine 2.4s linear infinite;
+}
+
+.soc-core,
+.soc-node {
+  position: absolute;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(16, 16, 16, 0.92);
+  color: var(--text);
+  cursor: grab;
+  user-select: none;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.32);
+  touch-action: none;
+}
+
+.soc-core:active,
+.soc-node:active,
+.soc-core.dragging,
+.soc-node.dragging {
+  cursor: grabbing;
+}
+
+.soc-core {
+  display: grid;
+  gap: 10px;
+  place-items: center;
+  width: 148px;
+  min-height: 132px;
+  padding: 14px;
+  text-align: center;
+}
+
+.soc-core span {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #050505;
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+  animation: corePulse 2.2s ease-in-out infinite;
+}
+
+.soc-core strong {
+  max-width: 12ch;
+  font-size: 0.9rem;
+  line-height: 1.15;
+}
+
+.soc-node {
+  display: grid;
+  gap: 3px;
+  min-width: 132px;
+  padding: 12px;
+  text-align: left;
+}
+
+.soc-node strong,
+.soc-node span {
+  pointer-events: none;
+}
+
+.soc-node strong {
+  font-size: 0.95rem;
+}
+
+.soc-node span {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.soc-node.active,
+.soc-core.active {
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(28, 28, 28, 0.96);
+}
+
+@keyframes flowLine {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+@keyframes corePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.18);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(255, 255, 255, 0);
+  }
 }
 
 .guide-panel {
@@ -745,7 +864,7 @@ progress::-webkit-progress-value {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .hero-panel img {
+  .soc-map {
     max-height: 360px;
   }
 }
@@ -803,9 +922,33 @@ progress::-webkit-progress-value {
     padding: 16px;
   }
 
-  .hero-panel img {
+  .soc-map {
     min-height: 190px;
     max-height: 240px;
+  }
+
+  .soc-core {
+    width: 118px;
+    min-height: 112px;
+  }
+
+  .soc-core span {
+    width: 42px;
+    height: 42px;
+    font-size: 1.6rem;
+  }
+
+  .soc-node {
+    min-width: 106px;
+    padding: 10px;
+  }
+
+  .soc-node strong {
+    font-size: 0.82rem;
+  }
+
+  .soc-node span {
+    font-size: 0.7rem;
   }
 
   .panel-heading {

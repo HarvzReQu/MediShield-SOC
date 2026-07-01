@@ -58,7 +58,34 @@
               Monitor simulated hospital operations with real public vulnerability intelligence from CISA KEV and NVD, scored for healthcare relevance.
             </p>
           </div>
-          <img src="assets/network-topology.svg" alt="Healthcare security topology diagram" />
+          <div class="soc-map" id="socMap" aria-label="Interactive healthcare security topology">
+            <svg class="soc-lines" id="socLines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <line data-link="ehr" x1="50" y1="50" x2="18" y2="18"></line>
+              <line data-link="iot" x1="50" y1="50" x2="20" y2="76"></line>
+              <line data-link="identity" x1="50" y1="50" x2="78" y2="20"></line>
+              <line data-link="cloud" x1="50" y1="50" x2="78" y2="76"></line>
+            </svg>
+            <button class="soc-core" id="socCore" type="button" data-node="core" style="left: 50%; top: 50%;" aria-label="SOC Correlation Core">
+              <span>+</span>
+              <strong>SOC Correlation Core</strong>
+            </button>
+            <button class="soc-node" type="button" data-node="ehr" style="left: 18%; top: 18%;" aria-label="Drag EHR Cluster">
+              <strong>EHR</strong>
+              <span>Audit logs</span>
+            </button>
+            <button class="soc-node" type="button" data-node="iot" style="left: 20%; top: 76%;" aria-label="Drag Medical IoT">
+              <strong>Medical IoT</strong>
+              <span>Devices</span>
+            </button>
+            <button class="soc-node" type="button" data-node="identity" style="left: 78%; top: 20%;" aria-label="Drag Identity">
+              <strong>Identity</strong>
+              <span>MFA / SSO</span>
+            </button>
+            <button class="soc-node" type="button" data-node="cloud" style="left: 78%; top: 76%;" aria-label="Drag Cloud Apps">
+              <strong>Cloud Apps</strong>
+              <span>APIs</span>
+            </button>
+          </div>
         </section>
 
         <section class="guide-panel" id="guide" aria-label="Plain-language guide">
