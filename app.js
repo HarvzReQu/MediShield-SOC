@@ -53,6 +53,9 @@ const publicSignalCount = document.querySelector("#publicSignalCount");
 const highPriorityCount = document.querySelector("#highPriorityCount");
 const modelScore = document.querySelector("#modelScore");
 const intelUpdated = document.querySelector("#intelUpdated");
+const toggleGuide = document.querySelector("#toggleGuide");
+const guideDialog = document.querySelector("#guideDialog");
+const closeGuide = document.querySelector("#closeGuide");
 
 let paused = false;
 let triaged = 0;
@@ -151,6 +154,9 @@ function renderIntel(data) {
   intelList.innerHTML = items
     .map((item) => {
       const summary = item.summary || "No summary available.";
+      const priorityReason = item.source === "CISA KEV"
+        ? "Known exploited vulnerability"
+        : `CVSS ${item.cvss || "n/a"} public vulnerability record`;
 
       return `
         <div class="intel-item ${escapeHtml(item.severity)}">
@@ -161,6 +167,7 @@ function renderIntel(data) {
             <div class="intel-meta">
               <span>${escapeHtml(item.source)}</span>
               <span>${escapeHtml(item.vendor)} / ${escapeHtml(item.product)}</span>
+              <span>${escapeHtml(priorityReason)}</span>
               <span>Healthcare signal: ${escapeHtml(item.healthcareSignal)}</span>
               <span>Published: ${formatDate(item.published)}</span>
             </div>
@@ -191,6 +198,14 @@ async function loadIntel() {
 
 severityFilter.addEventListener("change", renderIncidents);
 refreshIntel.addEventListener("click", loadIntel);
+
+toggleGuide.addEventListener("click", () => {
+  guideDialog.showModal();
+});
+
+closeGuide.addEventListener("click", () => {
+  guideDialog.close();
+});
 
 runTriage.addEventListener("click", () => {
   triaged = Math.min(triaged + 2, 8);

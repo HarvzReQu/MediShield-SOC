@@ -235,6 +235,57 @@ select {
   border: 1px solid var(--line);
 }
 
+.guide-panel {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.85fr) minmax(320px, 1.15fr);
+  gap: 22px;
+  align-items: start;
+  margin-bottom: 18px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #0d1b2b;
+}
+
+.guide-panel p {
+  margin-bottom: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.guide-grid,
+.glossary-list {
+  display: grid;
+  gap: 10px;
+}
+
+.guide-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.guide-grid article,
+.glossary-list article {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.guide-grid strong,
+.guide-grid span,
+.glossary-list strong,
+.glossary-list span {
+  display: block;
+}
+
+.guide-grid span,
+.glossary-list span {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
 .status-row {
   flex-wrap: wrap;
   gap: 8px;
@@ -320,6 +371,27 @@ select {
 }
 
 .panel-heading {
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.guide-dialog {
+  width: min(720px, calc(100vw - 32px));
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 20px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.guide-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.62);
+}
+
+.dialog-heading {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 18px;
@@ -555,7 +627,7 @@ progress::-webkit-progress-value {
   }
 
   .nav-list {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     margin-top: 22px;
   }
 
@@ -565,7 +637,12 @@ progress::-webkit-progress-value {
   }
 
   .hero-panel,
+  .guide-panel,
   .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-grid {
     grid-template-columns: 1fr;
   }
 
@@ -594,7 +671,8 @@ progress::-webkit-progress-value {
     width: 100%;
   }
 
-  .primary-button {
+  .primary-button,
+  .secondary-button {
     flex: 1;
   }
 

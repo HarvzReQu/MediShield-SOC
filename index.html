@@ -22,6 +22,7 @@
         </a>
         <nav class="nav-list">
           <a href="#overview" class="active">Overview</a>
+          <a href="#guide">Guide</a>
           <a href="#incidents">Incidents</a>
           <a href="#risk">Risk</a>
           <a href="#assets">Assets</a>
@@ -41,6 +42,7 @@
           </div>
           <div class="topbar-actions">
             <button class="icon-button" id="pauseFeed" aria-label="Pause event feed" title="Pause event feed">II</button>
+            <button class="secondary-button" id="toggleGuide">Guide</button>
             <button class="primary-button" id="runTriage">Run Triage</button>
           </div>
         </header>
@@ -57,6 +59,30 @@
             </p>
           </div>
           <img src="assets/network-topology.svg" alt="Healthcare security topology diagram" />
+        </section>
+
+        <section class="guide-panel" id="guide" aria-label="Plain-language guide">
+          <div>
+            <p class="eyebrow">Start Here</p>
+            <h2>What you are seeing</h2>
+            <p>
+              This dashboard combines simulated hospital SOC activity with real public vulnerability data. Use the high numbers and critical labels as a quick way to spot what deserves attention first.
+            </p>
+          </div>
+          <div class="guide-grid">
+            <article>
+              <strong>Real data</strong>
+              <span>CISA KEV and NVD CVE records are loaded through the public API.</span>
+            </article>
+            <article>
+              <strong>Simulated data</strong>
+              <span>Hospital alerts, assets, and response metrics are demo scenarios.</span>
+            </article>
+            <article>
+              <strong>Priority score</strong>
+              <span>A 0-100 score based on exploitation, ransomware, healthcare relevance, recency, and CVSS.</span>
+            </article>
+          </div>
         </section>
 
         <section class="metric-grid" aria-label="Security metrics">
@@ -126,7 +152,7 @@
               <button class="secondary-button" id="refreshIntel">Refresh</button>
             </div>
             <div class="source-note">
-              Uses public CISA Known Exploited Vulnerabilities and NVD CVE data. Priority is a transparent scoring model, not private hospital telemetry.
+              Real public source data. Priority is a transparent scoring model, not private hospital telemetry.
             </div>
             <div class="intel-list" id="intelList">
               <div class="empty-state">Loading public intelligence feeds...</div>
@@ -189,6 +215,38 @@
         </section>
       </main>
     </div>
+
+    <dialog class="guide-dialog" id="guideDialog" aria-labelledby="guideTitle">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">Visitor Guide</p>
+          <h2 id="guideTitle">How to read MediShield SOC</h2>
+        </div>
+        <button class="icon-button" id="closeGuide" aria-label="Close guide" title="Close guide">X</button>
+      </div>
+      <div class="glossary-list">
+        <article>
+          <strong>CVE</strong>
+          <span>A public vulnerability identifier, like a tracking number for a software security issue.</span>
+        </article>
+        <article>
+          <strong>CISA KEV</strong>
+          <span>A public catalog of vulnerabilities known to be exploited in the wild.</span>
+        </article>
+        <article>
+          <strong>NVD</strong>
+          <span>The U.S. National Vulnerability Database, used for CVE details and CVSS severity.</span>
+        </article>
+        <article>
+          <strong>SOC / SIEM</strong>
+          <span>A security operations workflow for collecting alerts, spotting risk, and triaging incidents.</span>
+        </article>
+        <article>
+          <strong>Healthcare signal</strong>
+          <span>A simple relevance count from healthcare terms such as medical, hospital, patient, infusion, or radiology.</span>
+        </article>
+      </div>
+    </dialog>
 
     <script src="app.js"></script>
   </body>
