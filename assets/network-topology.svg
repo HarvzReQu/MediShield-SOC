@@ -1,0 +1,46 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Healthcare security network topology</title>
+  <desc id="desc">Stylized hospital systems connected to a security operations hub.</desc>
+  <rect width="1200" height="720" rx="28" fill="#102034"/>
+  <path d="M86 560C221 415 339 494 470 353C596 218 774 253 928 136C1026 62 1110 90 1155 132" stroke="#49D3A7" stroke-width="4" stroke-linecap="round" opacity=".35"/>
+  <path d="M72 235C217 332 363 192 504 266C642 339 715 509 884 454C1024 409 1071 493 1142 565" stroke="#6CA8FF" stroke-width="4" stroke-linecap="round" opacity=".32"/>
+  <g filter="url(#shadow)">
+    <circle cx="602" cy="360" r="118" fill="#162B43" stroke="#49D3A7" stroke-width="3"/>
+    <circle cx="602" cy="360" r="70" fill="#203A55" stroke="#6CA8FF" stroke-width="2"/>
+    <path d="M574 361h56M602 333v56" stroke="#F6FBFF" stroke-width="15" stroke-linecap="round"/>
+  </g>
+  <g fill="#203A55" stroke="#6CA8FF" stroke-width="2">
+    <rect x="92" y="96" width="210" height="96" rx="18"/>
+    <rect x="114" y="472" width="226" height="108" rx="18"/>
+    <rect x="862" y="88" width="244" height="108" rx="18"/>
+    <rect x="839" y="490" width="268" height="116" rx="18"/>
+  </g>
+  <g stroke="#49D3A7" stroke-width="3" stroke-linecap="round">
+    <path d="M302 144c87 23 156 81 209 150"/>
+    <path d="M340 526c78-21 142-62 190-122"/>
+    <path d="M862 143c-76 24-130 78-168 144"/>
+    <path d="M839 546c-72-26-121-70-155-136"/>
+  </g>
+  <g fill="#F6FBFF" font-family="Arial, Helvetica, sans-serif">
+    <text x="126" y="136" font-size="25" font-weight="700">EHR Cluster</text>
+    <text x="126" y="169" font-size="17" opacity=".72">Audit logs, access events</text>
+    <text x="148" y="515" font-size="25" font-weight="700">Medical IoT</text>
+    <text x="148" y="548" font-size="17" opacity=".72">Infusion, imaging, telemetry</text>
+    <text x="897" y="132" font-size="25" font-weight="700">Identity</text>
+    <text x="897" y="165" font-size="17" opacity=".72">MFA, role drift, SSO</text>
+    <text x="876" y="536" font-size="25" font-weight="700">Cloud Apps</text>
+    <text x="876" y="570" font-size="17" opacity=".72">Claims, scheduling, APIs</text>
+    <text x="522" y="508" font-size="21" font-weight="700" fill="#49D3A7">SOC Correlation Core</text>
+  </g>
+  <g fill="#F4C95D">
+    <circle cx="500" cy="280" r="9"/>
+    <circle cx="721" cy="257" r="7"/>
+    <circle cx="488" cy="432" r="7"/>
+    <circle cx="747" cy="458" r="9"/>
+  </g>
+  <defs>
+    <filter id="shadow" x="454" y="212" width="296" height="296" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="24" stdDeviation="22" flood-color="#07111D" flood-opacity=".45"/>
+    </filter>
+  </defs>
+</svg>

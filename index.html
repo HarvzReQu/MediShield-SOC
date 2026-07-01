@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="MediShield SOC is a public-safe healthcare cybersecurity command center and SIEM dashboard simulation."
+    />
+    <title>MediShield SOC</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Primary">
+        <a class="brand" href="#overview" aria-label="MediShield SOC home">
+          <span class="brand-mark">+</span>
+          <span>
+            <strong>MediShield</strong>
+            <small>SOC</small>
+          </span>
+        </a>
+        <nav class="nav-list">
+          <a href="#overview" class="active">Overview</a>
+          <a href="#incidents">Incidents</a>
+          <a href="#risk">Risk</a>
+          <a href="#assets">Assets</a>
+          <a href="#compliance">Compliance</a>
+        </nav>
+        <div class="sidebar-status">
+          <span class="pulse"></span>
+          <span>Simulation live</span>
+        </div>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Healthcare Cyber Defense</p>
+            <h1>MediShield SOC Command Center</h1>
+          </div>
+          <div class="topbar-actions">
+            <button class="icon-button" id="pauseFeed" aria-label="Pause event feed" title="Pause event feed">II</button>
+            <button class="primary-button" id="runTriage">Run Triage</button>
+          </div>
+        </header>
+
+        <section class="hero-panel" id="overview">
+          <div class="hero-copy">
+            <div class="status-row">
+              <span class="badge badge-green">HIPAA-safe demo</span>
+              <span class="badge badge-amber">Synthetic telemetry</span>
+            </div>
+            <h2>Hospital-grade SIEM simulation for patient-care environments.</h2>
+            <p>
+              Monitor simulated EHR access, medical IoT behavior, identity risk, cloud app activity, and compliance drift from one focused SOC workspace.
+            </p>
+          </div>
+          <img src="assets/network-topology.svg" alt="Healthcare security topology diagram" />
+        </section>
+
+        <section class="metric-grid" aria-label="Security metrics">
+          <article class="metric">
+            <span>Open Incidents</span>
+            <strong id="incidentCount">18</strong>
+            <small class="trend-up">+4 from last hour</small>
+          </article>
+          <article class="metric">
+            <span>Risk Score</span>
+            <strong id="riskScore">71</strong>
+            <small class="trend-down">-6 after controls</small>
+          </article>
+          <article class="metric">
+            <span>Protected Assets</span>
+            <strong>436</strong>
+            <small>96% monitored</small>
+          </article>
+          <article class="metric">
+            <span>Mean Triage</span>
+            <strong>4m 22s</strong>
+            <small class="trend-down">31% faster</small>
+          </article>
+        </section>
+
+        <section class="dashboard-grid">
+          <article class="panel wide" id="incidents">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">SIEM Stream</p>
+                <h2>Active Healthcare Alerts</h2>
+              </div>
+              <select id="severityFilter" aria-label="Filter alerts by severity">
+                <option value="all">All severity</option>
+                <option value="critical">Critical</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+              </select>
+            </div>
+            <div class="incident-list" id="incidentList"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Correlation</p>
+                <h2>Alert Volume</h2>
+              </div>
+            </div>
+            <div class="bar-chart" id="barChart" aria-label="Alert volume by department"></div>
+          </article>
+
+          <article class="panel" id="risk">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">GRC</p>
+                <h2>Clinical Risk Matrix</h2>
+              </div>
+            </div>
+            <div class="risk-matrix" aria-label="Risk matrix">
+              <span>Low</span><span>Low</span><span>Medium</span><span>High</span>
+              <span>Low</span><span>Medium</span><span>High</span><span>High</span>
+              <span>Medium</span><span>High</span><span>High</span><span>Critical</span>
+              <span>High</span><span>High</span><span>Critical</span><span>Critical</span>
+            </div>
+          </article>
+
+          <article class="panel" id="assets">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Assets</p>
+                <h2>Critical Systems</h2>
+              </div>
+            </div>
+            <div class="asset-list">
+              <div><span>EHR Production</span><strong>Healthy</strong></div>
+              <div><span>Radiology PACS</span><strong>Elevated</strong></div>
+              <div><span>Infusion Pumps</span><strong>Watch</strong></div>
+              <div><span>Claims API</span><strong>Healthy</strong></div>
+            </div>
+          </article>
+
+          <article class="panel" id="compliance">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Compliance</p>
+                <h2>Control Posture</h2>
+              </div>
+            </div>
+            <div class="control-stack">
+              <label>HIPAA Security Rule <progress value="88" max="100"></progress></label>
+              <label>NIST CSF Detect <progress value="74" max="100"></progress></label>
+              <label>ISO 27001 Access <progress value="81" max="100"></progress></label>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
