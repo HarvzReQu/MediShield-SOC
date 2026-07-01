@@ -90,6 +90,7 @@ select {
   border-radius: 8px;
   color: var(--muted);
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .nav-list a:hover,
@@ -229,6 +230,7 @@ select {
 
 .hero-panel img {
   width: 100%;
+  max-height: 420px;
   min-height: 280px;
   object-fit: cover;
   border-radius: 8px;
@@ -493,6 +495,11 @@ select {
   font-size: 0.84rem;
 }
 
+.intel-meta span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .source-note {
   margin: -6px 0 14px;
   line-height: 1.5;
@@ -622,13 +629,28 @@ progress::-webkit-progress-value {
   .sidebar {
     position: static;
     height: auto;
+    padding: 18px;
     border-right: 0;
     border-bottom: 1px solid var(--line);
   }
 
+  .brand {
+    max-width: max-content;
+  }
+
   .nav-list {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    margin-top: 22px;
+    display: flex;
+    gap: 8px;
+    margin: 20px -18px 0;
+    padding: 0 18px 4px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav-list a {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
   }
 
   .sidebar-status {
@@ -650,54 +672,165 @@ progress::-webkit-progress-value {
   .intel-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .hero-panel img {
+    max-height: 360px;
+  }
 }
 
 @media (max-width: 640px) {
   main {
-    padding: 16px;
+    padding: 14px;
   }
 
-  .topbar,
-  .incident {
+  .topbar {
     align-items: stretch;
     grid-template-columns: 1fr;
   }
 
   .topbar {
     flex-direction: column;
+    gap: 16px;
+    margin-bottom: 16px;
   }
 
   .topbar-actions {
     width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .icon-button {
+    flex: 0 0 42px;
   }
 
   .primary-button,
   .secondary-button {
-    flex: 1;
+    flex: 1 1 120px;
   }
 
-  .nav-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  h1 {
+    font-size: 2rem;
+    line-height: 1;
   }
 
-  .hero-panel {
-    padding: 18px;
+  .hero-copy h2 {
+    font-size: 1.75rem;
+    line-height: 1.05;
   }
 
-  .metric-grid {
+  .hero-copy p,
+  .guide-panel p {
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .hero-panel,
+  .guide-panel,
+  .panel,
+  .metric {
+    padding: 16px;
+  }
+
+  .hero-panel img {
+    min-height: 190px;
+    max-height: 240px;
+  }
+
+  .panel-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .panel-heading select,
+  .panel-heading button {
+    width: 100%;
+  }
+
+  .metric-grid,
+  .intel-grid {
     grid-template-columns: 1fr;
   }
 
   .incident,
   .intel-item {
     display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .severity,
+  .priority {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
   }
 
   .incident button {
     width: 100%;
   }
 
-  .intel-grid {
-    grid-template-columns: 1fr;
+  .intel-item a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface-2);
+  }
+
+  .bar-chart {
+    min-height: 180px;
+    gap: 8px;
+  }
+
+  .bar {
+    min-width: 28px;
+    height: 150px;
+  }
+
+  .risk-matrix {
+    gap: 4px;
+  }
+
+  .risk-matrix span {
+    min-height: 48px;
+    font-size: 0.68rem;
+  }
+
+  .asset-list div {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .guide-dialog {
+    max-height: calc(100vh - 32px);
+    overflow: auto;
+    padding: 16px;
+  }
+
+  .dialog-heading {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 380px) {
+  .brand-mark {
+    width: 38px;
+    height: 38px;
+    font-size: 26px;
+  }
+
+  .nav-list a {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .metric strong {
+    font-size: 1.85rem;
   }
 }
