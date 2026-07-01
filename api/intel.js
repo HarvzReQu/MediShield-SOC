@@ -90,19 +90,27 @@ function nvdWindow() {
   };
 }
 
-async function fetchJson(url) {
-  const response = await fetch(url, {
-    headers: {
-      accept: "application/json",
-      "user-agent": "MediShield-SOC/1.0 public cybersecurity dashboard",
-    },
-  });
+async function fetchJson(url, timeoutMs = 8000) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
-  if (!response.ok) {
-    throw new Error(`${response.status} ${response.statusText}`);
+  try {
+    const response = await fetch(url, {
+      headers: {
+        accept: "application/json",
+        "user-agent": "MediShield-SOC/1.0 public cybersecurity dashboard",
+      },
+      signal: controller.signal,
+    });
+
+    if (!response.ok) {
+      throw new Error(`${response.status} ${response.statusText}`);
+    }
+
+    return response.json();
+  } finally {
+    clearTimeout(timeout);
   }
-
-  return response.json();
 }
 
 async function getKev() {
@@ -187,8 +195,15 @@ module.exports = async function handler(request, response) {
   response.setHeader("Cache-Control", "s-maxage=1800, stale-while-revalidate=3600");
 
   try {
-    const [kev, nvd] = await Promise.all([getKev(), getNvd()]);
+    const [kevResult, nvdResult] = await Promise.allSettled([getKev(), getNvd()]);
+    const kev = kevResult.status === "fulfilled" ? kevResult.value : { items: [], error: kevResult.reason.message };
+    const nvd = nvdResult.status === "fulfilled" ? nvdResult.value : { items: [], error: nvdResult.reason.message };
     const items = [...kev.items, ...nvd.items].sort((a, b) => b.priority - a.priority).slice(0, 10);
+
+    if (items.length === 0) {
+      throw new Error("Both CISA KEV and NVD feeds were unavailable.");
+    }
+
     const averagePriority = Math.round(items.reduce((sum, item) => sum + item.priority, 0) / Math.max(items.length, 1));
 
     response.status(200).json({
