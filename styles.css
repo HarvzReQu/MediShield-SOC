@@ -923,32 +923,40 @@ progress::-webkit-progress-value {
   }
 
   .soc-map {
-    min-height: 190px;
-    max-height: 240px;
+    min-height: 300px;
+    max-height: 320px;
+    aspect-ratio: 1 / 1;
+    background-size: 26px 26px, 26px 26px, auto, auto;
   }
 
   .soc-core {
-    width: 118px;
-    min-height: 112px;
-  }
-
-  .soc-core span {
-    width: 42px;
-    height: 42px;
-    font-size: 1.6rem;
-  }
-
-  .soc-node {
-    min-width: 106px;
+    width: 102px;
+    min-height: 92px;
+    gap: 6px;
     padding: 10px;
   }
 
+  .soc-core span {
+    width: 36px;
+    height: 36px;
+    font-size: 1.35rem;
+  }
+
+  .soc-core strong {
+    font-size: 0.74rem;
+  }
+
+  .soc-node {
+    min-width: 92px;
+    padding: 8px;
+  }
+
   .soc-node strong {
-    font-size: 0.82rem;
+    font-size: 0.75rem;
   }
 
   .soc-node span {
-    font-size: 0.7rem;
+    font-size: 0.64rem;
   }
 
   .panel-heading {
