@@ -47,6 +47,12 @@ const pauseFeed = document.querySelector("#pauseFeed");
 const incidentCount = document.querySelector("#incidentCount");
 const riskScore = document.querySelector("#riskScore");
 const barChart = document.querySelector("#barChart");
+const intelList = document.querySelector("#intelList");
+const refreshIntel = document.querySelector("#refreshIntel");
+const publicSignalCount = document.querySelector("#publicSignalCount");
+const highPriorityCount = document.querySelector("#highPriorityCount");
+const modelScore = document.querySelector("#modelScore");
+const intelUpdated = document.querySelector("#intelUpdated");
 
 let paused = false;
 let triaged = 0;
@@ -94,7 +100,97 @@ function updateSimulation() {
   riskScore.textContent = currentRisk;
 }
 
+function formatDate(dateLike) {
+  if (!dateLike) return "Unknown date";
+  return new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(new Date(dateLike));
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function fallbackIntel() {
+  return {
+    generatedAt: new Date().toISOString(),
+    summary: {
+      totalPublicSignals: 3,
+      criticalOrHigh: 2,
+      averagePriority: 76,
+    },
+    items: [
+      {
+        id: "CVE public feed unavailable",
+        source: "Local fallback",
+        title: "Public feeds could not be reached from this browser session",
+        vendor: "MediShield SOC",
+        product: "Demo continuity",
+        summary: "The deployed version uses a Vercel API route to load CISA KEV and NVD. This fallback keeps the UI usable when opened directly from the file system.",
+        published: new Date().toISOString(),
+        priority: 76,
+        severity: "high",
+        healthcareSignal: 1,
+        url: "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+      },
+    ],
+  };
+}
+
+function renderIntel(data) {
+  const items = data.items || [];
+
+  publicSignalCount.textContent = data.summary?.totalPublicSignals ?? items.length;
+  highPriorityCount.textContent = data.summary?.criticalOrHigh ?? items.filter((item) => item.priority >= 70).length;
+  modelScore.textContent = data.summary?.averagePriority ?? "--";
+  intelUpdated.textContent = `Updated ${formatDate(data.generatedAt)}`;
+
+  intelList.innerHTML = items
+    .map((item) => {
+      const summary = item.summary || "No summary available.";
+
+      return `
+        <div class="intel-item ${escapeHtml(item.severity)}">
+          <span class="priority"><b>${escapeHtml(item.priority)}</b>${escapeHtml(item.severity)}</span>
+          <div>
+            <strong>${escapeHtml(item.id)} - ${escapeHtml(item.title)}</strong>
+            <small>${escapeHtml(summary).slice(0, 220)}${summary.length > 220 ? "..." : ""}</small>
+            <div class="intel-meta">
+              <span>${escapeHtml(item.source)}</span>
+              <span>${escapeHtml(item.vendor)} / ${escapeHtml(item.product)}</span>
+              <span>Healthcare signal: ${escapeHtml(item.healthcareSignal)}</span>
+              <span>Published: ${formatDate(item.published)}</span>
+            </div>
+          </div>
+          <a href="${escapeHtml(item.url)}" target="_blank" rel="noreferrer">Open</a>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+async function loadIntel() {
+  refreshIntel.disabled = true;
+  refreshIntel.textContent = "Refreshing";
+
+  try {
+    const response = await fetch("/api/intel");
+    if (!response.ok) throw new Error("Public feed API unavailable");
+    const data = await response.json();
+    renderIntel(data);
+  } catch (error) {
+    renderIntel(fallbackIntel());
+  } finally {
+    refreshIntel.disabled = false;
+    refreshIntel.textContent = "Refresh";
+  }
+}
+
 severityFilter.addEventListener("change", renderIncidents);
+refreshIntel.addEventListener("click", loadIntel);
 
 runTriage.addEventListener("click", () => {
   triaged = Math.min(triaged + 2, 8);
@@ -123,4 +219,5 @@ incidentList.addEventListener("click", (event) => {
 
 renderIncidents();
 renderBars();
+loadIntel();
 setInterval(updateSimulation, 2600);

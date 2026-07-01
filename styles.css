@@ -167,6 +167,7 @@ h2 {
 
 .icon-button,
 .primary-button,
+.secondary-button,
 select {
   min-height: 42px;
   border: 1px solid var(--line);
@@ -185,6 +186,14 @@ select {
   padding: 0 16px;
   background: var(--green);
   color: #06141f;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.secondary-button {
+  padding: 0 14px;
+  background: var(--surface-2);
+  color: var(--text);
   font-weight: 800;
   cursor: pointer;
 }
@@ -249,6 +258,7 @@ select {
 }
 
 .metric-grid,
+.intel-grid,
 .dashboard-grid {
   display: grid;
   gap: 18px;
@@ -256,6 +266,11 @@ select {
 
 .metric-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-bottom: 18px;
+}
+
+.intel-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-bottom: 18px;
 }
 
@@ -311,13 +326,15 @@ select {
 }
 
 .incident-list,
+.intel-list,
 .asset-list,
 .control-stack {
   display: grid;
   gap: 12px;
 }
 
-.incident {
+.incident,
+.intel-item {
   display: grid;
   grid-template-columns: 96px minmax(0, 1fr) auto;
   gap: 14px;
@@ -330,30 +347,51 @@ select {
   background: rgba(255, 255, 255, 0.025);
 }
 
-.incident.critical {
+.incident.critical,
+.intel-item.critical {
   border-left-color: var(--red);
 }
 
-.incident.high {
+.incident.high,
+.intel-item.high {
   border-left-color: var(--amber);
 }
 
-.incident.medium {
+.incident.medium,
+.intel-item.medium {
   border-left-color: var(--blue);
 }
 
-.severity {
+.intel-item.low {
+  border-left-color: var(--green);
+}
+
+.severity,
+.priority {
   font-size: 0.76rem;
   font-weight: 900;
   text-transform: uppercase;
 }
 
+.priority {
+  display: grid;
+  gap: 4px;
+}
+
+.priority b {
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
 .incident strong,
-.incident small {
+.incident small,
+.intel-item strong,
+.intel-item small {
   display: block;
 }
 
 .incident small,
+.intel-item small,
 .asset-list span,
 .control-stack label {
   color: var(--muted);
@@ -367,6 +405,38 @@ select {
   background: var(--surface-2);
   color: var(--text);
   cursor: pointer;
+}
+
+.intel-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.intel-meta span,
+.source-note,
+.empty-state {
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.source-note {
+  margin: -6px 0 14px;
+  line-height: 1.5;
+}
+
+.empty-state {
+  padding: 18px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+}
+
+.intel-item a {
+  color: var(--green);
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-decoration: none;
 }
 
 .bar-chart {
@@ -499,7 +569,8 @@ progress::-webkit-progress-value {
     grid-template-columns: 1fr;
   }
 
-  .metric-grid {
+  .metric-grid,
+  .intel-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -539,11 +610,16 @@ progress::-webkit-progress-value {
     grid-template-columns: 1fr;
   }
 
-  .incident {
+  .incident,
+  .intel-item {
     display: grid;
   }
 
   .incident button {
     width: 100%;
+  }
+
+  .intel-grid {
+    grid-template-columns: 1fr;
   }
 }

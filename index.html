@@ -49,11 +49,11 @@
           <div class="hero-copy">
             <div class="status-row">
               <span class="badge badge-green">HIPAA-safe demo</span>
-              <span class="badge badge-amber">Synthetic telemetry</span>
+              <span class="badge badge-amber">Live public CVE intel</span>
             </div>
             <h2>Hospital-grade SIEM simulation for patient-care environments.</h2>
             <p>
-              Monitor simulated EHR access, medical IoT behavior, identity risk, cloud app activity, and compliance drift from one focused SOC workspace.
+              Monitor simulated hospital operations with real public vulnerability intelligence from CISA KEV and NVD, scored for healthcare relevance.
             </p>
           </div>
           <img src="assets/network-topology.svg" alt="Healthcare security topology diagram" />
@@ -82,6 +82,24 @@
           </article>
         </section>
 
+        <section class="intel-grid" aria-label="Public intelligence metrics">
+          <article class="metric">
+            <span>Public Signals</span>
+            <strong id="publicSignalCount">--</strong>
+            <small id="intelUpdated">Loading feeds</small>
+          </article>
+          <article class="metric">
+            <span>High Priority</span>
+            <strong id="highPriorityCount">--</strong>
+            <small>CISA KEV + NVD</small>
+          </article>
+          <article class="metric">
+            <span>Model Score</span>
+            <strong id="modelScore">--</strong>
+            <small>Feature-based priority</small>
+          </article>
+        </section>
+
         <section class="dashboard-grid">
           <article class="panel wide" id="incidents">
             <div class="panel-heading">
@@ -97,6 +115,22 @@
               </select>
             </div>
             <div class="incident-list" id="incidentList"></div>
+          </article>
+
+          <article class="panel wide" id="publicIntel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Public Data</p>
+                <h2>Live Vulnerability Intelligence</h2>
+              </div>
+              <button class="secondary-button" id="refreshIntel">Refresh</button>
+            </div>
+            <div class="source-note">
+              Uses public CISA Known Exploited Vulnerabilities and NVD CVE data. Priority is a transparent scoring model, not private hospital telemetry.
+            </div>
+            <div class="intel-list" id="intelList">
+              <div class="empty-state">Loading public intelligence feeds...</div>
+            </div>
           </article>
 
           <article class="panel">
