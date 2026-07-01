@@ -163,7 +163,7 @@ function renderIntel(data) {
           <span class="priority"><b>${escapeHtml(item.priority)}</b>${escapeHtml(item.severity)}</span>
           <div>
             <strong>${escapeHtml(item.id)} - ${escapeHtml(item.title)}</strong>
-            <small>${escapeHtml(summary).slice(0, 220)}${summary.length > 220 ? "..." : ""}</small>
+            <small>${escapeHtml(summary).slice(0, 150)}${summary.length > 150 ? "..." : ""}</small>
             <div class="intel-meta">
               <span>${escapeHtml(item.source)}</span>
               <span>${escapeHtml(item.vendor)} / ${escapeHtml(item.product)}</span>

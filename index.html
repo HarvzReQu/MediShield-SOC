@@ -126,6 +126,22 @@
           </article>
         </section>
 
+        <section class="panel public-strip" id="publicIntel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Public Data</p>
+              <h2>Live Vulnerability Intelligence</h2>
+            </div>
+            <button class="secondary-button" id="refreshIntel">Refresh</button>
+          </div>
+          <div class="source-note">
+            Swipe sideways to browse real CISA KEV and NVD records. Priority is a transparent scoring model, not private hospital telemetry.
+          </div>
+          <div class="intel-list" id="intelList" aria-label="Swipeable public vulnerability records">
+            <div class="empty-state">Loading public intelligence feeds...</div>
+          </div>
+        </section>
+
         <section class="dashboard-grid">
           <article class="panel wide" id="incidents">
             <div class="panel-heading">
@@ -141,22 +157,6 @@
               </select>
             </div>
             <div class="incident-list" id="incidentList"></div>
-          </article>
-
-          <article class="panel wide" id="publicIntel">
-            <div class="panel-heading">
-              <div>
-                <p class="eyebrow">Public Data</p>
-                <h2>Live Vulnerability Intelligence</h2>
-              </div>
-              <button class="secondary-button" id="refreshIntel">Refresh</button>
-            </div>
-            <div class="source-note">
-              Real public source data. Priority is a transparent scoring model, not private hospital telemetry.
-            </div>
-            <div class="intel-list" id="intelList">
-              <div class="empty-state">Loading public intelligence feeds...</div>
-            </div>
           </article>
 
           <article class="panel">
