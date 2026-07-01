@@ -17,6 +17,10 @@
   --high-line: #cfcfcf;
   --medium-line: #9a9a9a;
   --low-line: #666666;
+  --risk-critical: #ff6b70;
+  --risk-high: #ffd166;
+  --risk-medium: #2f80ed;
+  --risk-low: #128a3d;
 }
 
 * {
@@ -446,6 +450,18 @@ select {
   border-left-color: var(--low-line);
 }
 
+.incident.critical .severity {
+  color: var(--critical);
+}
+
+.incident.high .severity {
+  color: var(--high);
+}
+
+.incident.medium .severity {
+  color: var(--medium);
+}
+
 .severity,
 .priority {
   font-size: 0.76rem;
@@ -613,7 +629,7 @@ select {
   place-items: center;
   border-radius: 6px;
   background: #e9e9e9;
-  color: #050505;
+  color: var(--risk-low);
   font-size: 0.76rem;
   font-weight: 900;
 }
@@ -622,6 +638,7 @@ select {
 .risk-matrix span:nth-child(6),
 .risk-matrix span:nth-child(9) {
   background: #bdbdbd;
+  color: var(--risk-medium);
 }
 
 .risk-matrix span:nth-child(4),
@@ -632,14 +649,14 @@ select {
 .risk-matrix span:nth-child(13),
 .risk-matrix span:nth-child(14) {
   background: #858585;
-  color: var(--text);
+  color: var(--risk-high);
 }
 
 .risk-matrix span:nth-child(12),
 .risk-matrix span:nth-child(15),
 .risk-matrix span:nth-child(16) {
   background: #3a3a3a;
-  color: var(--text);
+  color: var(--risk-critical);
 }
 
 .asset-list div {
